@@ -1,0 +1,27 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Authors</title>
+</head>
+<body>
+    <h1>Authors</h1>
+    <p>
+        Here you can see all the Authors that we have.
+    </p>
+    <ul>
+        {%for author in authors %}
+        <li>
+            {{author.first_name}} {{author.last_name}} 
+            <a href='{% url 'update_author_route' author_id=author.id%}'>Edit</a>
+            <a href='{% url 'delete_author_route' author_id=author.id%}'>Delete</a>
+        </li>
+        {%endfor%}
+    </ul>
+</body>
+</html>
