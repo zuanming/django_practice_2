@@ -1,0 +1,11 @@
+{% extends 'base.template.html' %}
+
+{% block content %}
+ <h1>Delete review {{review.title}}</h1>
+    <p>Are you sure?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Yes"/>
+        <a href="{% url 'show_reviews_route' %}">No</a>
+    </form>
+{% endblock %}

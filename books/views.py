@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
 from .models import Book, Author
 from .forms import BookForm, AuthorForm
 from django.contrib.auth.decorators import login_required, permission_required
+
 
 # Create your views here.
 
@@ -28,13 +30,14 @@ def create_book(request):
 
         # get form input from html
         create_form = BookForm(request.POST)
+        title = request.POST.get('title')
 
         # check if form is valid
         if create_form.is_valid():
 
             # save form into model
             create_form.save()
-
+            messages.success(request, f"New book {title} has been created")
             # redirect to index function (show books page)
             return redirect(reverse(index))
         else:
@@ -53,8 +56,10 @@ def create_book(request):
 def create_author(request):
     if request.method == 'POST':
         create_form = AuthorForm(request.POST)
-        if create_author.is_valid():
+        name = request.POST.get('first_name')+" "+request.POST.get('last_name')
+        if create_form.is_valid():
             create_form.save()
+            messages.success(request, f"New author {name} has been created")
             return redirect(reverse(author))
         else:
             return render(request, 'books/create_author.template.html', {
@@ -77,8 +82,10 @@ def update_book(request, book_id):
         # 3. create the form and fill in the user's data. Also specify that
         # this is to update an existing model (the instance argument)
         book_form = BookForm(request.POST, instance=book_being_updated)
+        title = request.POST.get('title')
         if book_form.is_valid():
             book_form.save()
+            messages.success(request, f"Book {title} has been updated")
             return redirect(reverse(index))
         else:
             return render(request, 'books/update.template.html', {
@@ -95,9 +102,13 @@ def update_book(request, book_id):
 def update_author(request, author_id):
 
     author_being_updated = get_object_or_404(Author, pk=author_id)
+
     if request.method == "POST":
         author_form = AuthorForm(request.POST, instance=author_being_updated)
-        if author_form.isValid():
+        name = request.POST.get('first_name')+" "+request.POST.get('last_name')
+        if author_form.is_valid():
+            author_form.save()
+            messages.success(request, f"Author {name} has been updated")
             return redirect(reverse(author))
         else:
             return render(request, 'books/update_author.template.html', {
@@ -112,9 +123,9 @@ def update_author(request, author_id):
 
 def delete_book(request, book_id):
     book_to_delete = get_object_or_404(Book, pk=book_id)
-
     if request.method=="POST":
         book_to_delete.delete()
+        messages.success(request, f"Book {book_to_delete.title} has been deleted")
         return redirect(index)
 
     else:
@@ -124,9 +135,9 @@ def delete_book(request, book_id):
 
 def delete_author(request, author_id):
     author_to_delete = get_object_or_404(Author, pk=author_id)
-
     if request.method=="POST":
         author_to_delete.delete()
+        messages.success(request, f"Author {author_to_delete.first_name} {author_to_delete.last_name} has been deleted")
         return redirect(author)
 
     else:

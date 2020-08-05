@@ -1,18 +1,17 @@
-{%load static %}
+{% extends 'base.template.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Books</h1>
+{% block content %}
+    <h1>Reviews</h1>
     <p>
         Here you can see all the reviews that we have.
     </p>
-</body>
-</html>
+    <ul>
+    {% for review in reviews %}
+        <li>
+            {{review.title}}
+            <a href="{% url 'update_review_route' review_id=review.id %}">Edit</a>
+            <a href="{% url 'delete_review_route' review_id=review.id %}">Delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
