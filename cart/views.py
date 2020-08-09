@@ -50,3 +50,14 @@ def remove_from_cart(request, book_id):
         messages.success(request, f"Book has been removed from  cart")
     
     return redirect(reverse('view_cart'))
+
+def update_quantity(request, book_id):
+    cart = request.session['shopping_cart']
+    if book_id in cart:
+        cart[book_id]['qty'] = request.POST['qty']
+        request.session['shopping_cart']=cart
+        messages.success(request, f"Quantity for {cart[book_id]['title']} has been updated")
+        return redirect(reverse('view_cart'))
+    else:
+        messages.success(request, f"Error")
+        return redirect(reverse('view_cart'))

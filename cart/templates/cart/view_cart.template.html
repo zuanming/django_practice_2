@@ -7,10 +7,12 @@
     <li>
         {{value.title}} x {{value.qty}}<br/>
         {{value.cost}}
-        <a href="{% url 'remove_from_cart' book_id=value.id %}" class = "btn btn-danger">Remove</a>
-        <form method='POST'>
-            <input type='text' name='qty' vlue = '{{value.qty}}' style = ""/>
-
+        <form method='POST' action='{% url "update_cart_quantity" book_id=value.id %}'>
+            {% csrf_token %}
+            <a href="{% url 'remove_from_cart' book_id=value.id %}" class = "btn btn-danger">Remove</a>
+            <input type='text' name='qty' value = '{{value.qty}}' style = "width:20px"/>
+            <input type = "submit" value="Update Quantity" class = "btn btn-primary btn-sm"/>
+        </form>
     </li>
     {% endfor %}
 </ul>

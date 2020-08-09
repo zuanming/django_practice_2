@@ -1,1 +1,5 @@
 .env
+Dockerfile.Dockerfile
+docker-compose.yml
+.theia
+requirements.txt
