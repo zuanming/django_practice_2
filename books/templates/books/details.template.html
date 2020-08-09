@@ -1,0 +1,48 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
+{% load cloudinary %}
+
+{% block content %}
+<div class = "card">
+    <div class = "card-body">
+        <div class = "card-title">
+            <h1>{{book.title}}</h1>
+        </div>
+        {% cloudinary book.cover width=200  %}
+        <p>
+            ISBN: {{book.ISBN}}
+        </p>
+        <p>
+            Author: {{book.author.first_name}} {{book.author_last_name}}
+        </p>
+        <p>
+            Genre: {{book.genre.title}}
+        </p>
+        <p>
+            Tags: {% for t in book.tags.all %} <span class="label">{{t.title}}</span> {%endfor%}
+        </p>
+    </div>
+</div>
+{{book.reviews}}
+{%for r in book.review_set.all %}
+<div class="card">
+    <div class = "card-body">
+        <div class="card-title">
+            <h3>{{r.title}}</h3>
+        </div>
+        <div>
+            {{r.content}}
+        </div>
+        <p>Posted by {{r.user.username}}</p> 
+        <a href="{% url 'create_comment_route' review_id=r.id %}" class = "btn btn-info">Comment</a>
+    </div>
+</div>
+{%endfor%}
+
+<form method="POST" action="{% url 'create_review_route' book_id=book.id %}">
+{% csrf_token %}
+{{ form|crispy}}
+<input type="submit"/>
+</form>
+
+{% endblock %}

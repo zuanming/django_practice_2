@@ -1,10 +1,15 @@
 {% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h1>Reviews</h1>
     <p>
         Here you can see all the reviews that we have.
     </p>
+    <form method="GET">
+        {{search_review_form|crispy}}
+        <input type='submit' value='Search!'/>
+    </form>
     <ul>
     {% for review in reviews %}
         <li>

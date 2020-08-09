@@ -1,0 +1,15 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Add a comment to the following review</h2>
+<blockquote>
+    {{review.content}}
+</blockquote>
+<form method='POST'>
+    {% csrf_token %}
+    {{form|crispy}}
+    <input type = 'submit' class = "btn btn-info" value = 'Leave a comment'/>
+</form>
+
+{% endblock%}
