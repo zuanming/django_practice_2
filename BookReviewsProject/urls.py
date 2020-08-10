@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 import books.views
 import reviews.views
+import checkout.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,5 @@ urlpatterns = [
     path('authors/update/<author_id>/', books.views.update_author, name = 'update_author_route'),
     path('authors/delete/<author_id>/', books.views.delete_author, name='delete_author_route'),
     path('cart/', include ('cart.urls')),
+    path('checkout/', include ('checkout.urls')),
 ]
