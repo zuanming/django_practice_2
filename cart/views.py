@@ -61,3 +61,4 @@ def update_quantity(request, book_id):
     else:
         messages.success(request, f"Error")
         return redirect(reverse('view_cart'))
+

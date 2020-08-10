@@ -21,7 +21,11 @@
 				{% for message in messages %} {{ message }} {% endfor %}
 			</div>
 		</div>
-		{% endif %} {%block content%}{%endblock%}
+		{% endif %} 
+        
+        <div class="header">
+        <a href="{% url 'view_cart' %}">Shopping Cart ({{number_of_items}})</a>
+        {%block content%}{%endblock%}
 	</div>
 
 	
